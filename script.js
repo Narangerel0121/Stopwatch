@@ -1,41 +1,27 @@
-
-let hourRef = document.getElementById("hour");
-let minuteRef = document.getElementById("minute");
-let secondRef = document.getElementById("second");
-
-let second = 0;
-let minute = 0;
-let hour = 0;
+let [seconds, minutes, hours] = [0, 0, 0,]
+let displayTime = document.getElementById("displayTime")
 let timer = 0;
-
-function startTimer() {
-    second++;
-    if (second <= 9) {
-        secondRef.innerText = "0" + second
-    }
-    if (second > 9) {
-        secondRef.innerText = second
-    }
-    if (second > 59) {
-        minute++;
-        second = 0;
-        if (minute < 10) {
-            minuteRef.innerText = "0" + minute
-        }
-        if (minute > 10) {
-            minuteRef.innerText = minute
-        }
-        if(minute > 59) {
-            hour++;
-            minute = 0;
+function stopwatch() {
+    seconds++;
+    if (seconds == 60) {
+        seconds = 0;
+        minutes++;
+        if (minutes == 60) {
+            minutes = 0;
+            hours++;
         }
     }
-    console.log(second);
-    
-};
+    let h = hours < 10 ? "0" + hours : hours;
+    let m = minutes < 10 ? "0" + minutes : minutes;
+    let s = seconds < 10 ? "0" + seconds : seconds;
+    displayTime.innerHTML = h + ":" + m + ":" + s;
+}
 
 function watchStart() {
-    timer = setInterval(startTimer, 1000);
+    // if (timer != null) {
+    //     clearInterval(timer);
+    // }
+    timer = setInterval(stopwatch, 1000);
 }
 
 function watchStop() {
@@ -44,7 +30,6 @@ function watchStop() {
 
 function watchReset() {
     clearInterval(timer);
-    hourRef = "00";
-    minuteRef = "00";
-    secondRef = "00";
+    [seconds, minutes, hours] = [0, 0, 0,];
+    displayTime.innerHTML = "00:00:00";
 }
